@@ -1,0 +1,11 @@
+if (Gamma_GLUDC > -1.268) and (sigma_km_product2_GF6PTA > -1.506) and (sigma_km_product2_GLUDy <= 1.484) and (sigma_km_substrate_INDPYRD > -1.652) then class: False | based on 165 samples
+if (Gamma_GLUDC <= -1.268) and (sigma_km_product2_AKGMAL <= -0.085) and (sigma_km_substrate2_UBICRED <= 0.313) and (sigma_km_product2_ASPTAm <= 1.689) then class: False | based on 21 samples
+if (Gamma_GLUDC <= -1.268) and (sigma_km_product2_AKGMAL > -0.085) and (Gamma_ALDD2y > -1.068) then class: True | based on 18 samples
+if (Gamma_GLUDC > -1.268) and (sigma_km_product2_GF6PTA > -1.506) and (sigma_km_product2_GLUDy > 1.484) and (sigma_km_product2_FBP <= -0.454) then class: True | based on 10 samples
+if (Gamma_GLUDC > -1.268) and (sigma_km_product2_GF6PTA > -1.506) and (sigma_km_product2_GLUDy <= 1.484) and (sigma_km_substrate_INDPYRD <= -1.652) then class: False | based on 8 samples
+if (Gamma_GLUDC > -1.268) and (sigma_km_product2_GF6PTA > -1.506) and (sigma_km_product2_GLUDy > 1.484) and (sigma_km_product2_FBP > -0.454) then class: False | based on 7 samples
+if (Gamma_GLUDC > -1.268) and (sigma_km_product2_GF6PTA <= -1.506) then class: True | based on 7 samples
+if (Gamma_GLUDC <= -1.268) and (sigma_km_product2_AKGMAL > -0.085) and (Gamma_ALDD2y <= -1.068) then class: True | based on 6 samples
+if (Gamma_GLUDC <= -1.268) and (sigma_km_product2_AKGMAL <= -0.085) and (sigma_km_substrate2_UBICRED > 0.313) and (sigma_km_product6_THZPSN2_SC > 0.121) then class: False | based on 6 samples
+if (Gamma_GLUDC <= -1.268) and (sigma_km_product2_AKGMAL <= -0.085) and (sigma_km_substrate2_UBICRED > 0.313) and (sigma_km_product6_THZPSN2_SC <= 0.121) then class: True | based on 6 samples
+if (Gamma_GLUDC <= -1.268) and (sigma_km_product2_AKGMAL <= -0.085) and (sigma_km_substrate2_UBICRED <= 0.313) and (sigma_km_product2_ASPTAm > 1.689) then class: False | based on 6 samples
