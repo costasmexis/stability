@@ -1,0 +1,3 @@
+"if (Gamma_COAtrm > 1.224) and (sigma_km_product_Htgm > -0.507) then class: True | based on 11 samples"
+"if (Gamma_COAtrm <= 1.224) and (sigma_km_product2_GF6PTA <= -1.331) and (sigma_km_product1_HEMEOSm > 0.751) and (Gamma_ALCD26xim <= 0.46) then class: True | based on 3 samples"
+"if (Gamma_COAtrm <= 1.224) and (sigma_km_product2_GF6PTA > -1.331) and (sigma_km_substrate_ILEtmi > 1.824) then class: True | based on 1 samples"

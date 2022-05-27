@@ -69,9 +69,7 @@ print("Train: ", X_train.shape, "Test: ", X_test.shape)
 X_train, X_test = normalize(X_train, X_test)
 
 parser = argparse.ArgumentParser(description='Args model from which rules will be extracted')
-parser.add_argument('-model','--model', help='Model', required=True)
-# parser.add_argument('-file_name','--file_name', help='ex. svc_tree_model.sav', required=True)
-# parser.add_argument('-figure_name','--figure_name', help='ex. svc_tree_graph.png', required=True)
+parser.add_argument('-model','--model', help='ex. svc_tree_model.sav', required=True)
 args = parser.parse_args()
 
 # ===================
