@@ -18,6 +18,8 @@ from sklearn.preprocessing import MinMaxScaler, StandardScaler
 from sklearn import tree
 from sklearn.tree import _tree
 
+import xgboost as xgb
+
 import warnings
 warnings.filterwarnings('ignore')
 
@@ -41,7 +43,7 @@ def normalize(X_train, X_test):
 X_train, X_test = normalize(X_train, X_test)
 
 parser = argparse.ArgumentParser(description='Args model from which rules will be extracted')
-parser.add_argument('-model','--model', help='Model', required=True)
+parser.add_argument('-model','--model', help='ex. svc_tree_model.sav', required=True)
 args = parser.parse_args()
 
 filename = args.model
@@ -106,7 +108,7 @@ feature_names = df.drop('Stability',axis=1).columns.values
 
 rules = get_rules(model, feature_names=feature_names, class_names=['False','True'])
 
-textfile = open("all_rules.txt", "w")
+textfile = open(args.model+"_all_rules.txt", "w")
 for element in rules:
     textfile.write(element + "\n")
 textfile.close()
@@ -118,5 +120,5 @@ rules['rule'] = rules['rule'].astype('string')
 rules['index_of_true'] = rules['rule'].str.find('True')
 rules['class'] = rules['index_of_true'] != -1
 
-rules[rules['class']==True]['rule'].to_csv('stability_rules.txt', header=None, index=None, sep=' ', mode='a')
+rules[rules['class']==True]['rule'].to_csv(args.model+'_stability_rules.txt', header=None, index=None, sep=' ', mode='a')
 

@@ -14,6 +14,7 @@ from sklearn.svm import SVC
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import roc_auc_score, accuracy_score, f1_score, precision_score, recall_score, confusion_matrix
 from sklearn.model_selection import RandomizedSearchCV
+from catboost import CatBoostClassifier
 
 import xgboost as xgb
 
@@ -104,6 +105,21 @@ def tree():
     plt.figure(figsize=(30,30))  # set plot size (denoted in inches)
     tree.plot_tree(model, filled=True, class_names=['0','1'])
     plt.savefig('dcs_tree.png')
+
+
+def catboost():
+
+    # ===================
+    # CatBoost
+    # ===================
+    cat = CatBoostClassifier()
+    cat.fit(X_train, y_train.values.ravel())
+    score, y_pred = run_model(cat, X_train, y_train.values.ravel(),
+        X_test, y_test.values.ravel())
+
+    filename = 'catboost_model.sav'
+    pickle.dump(cat, open(filename, 'wb'))
+    
 
 
 

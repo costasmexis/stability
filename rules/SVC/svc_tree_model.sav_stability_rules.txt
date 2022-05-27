@@ -1,0 +1,6 @@
+"if (sigma_km_product2_GF6PTA <= -1.331) and (sigma_km_product1_PRPPS > 1.006) then class: True | based on 7 samples"
+"if (sigma_km_product2_GF6PTA > -1.331) and (sigma_km_product10_LMPD_s_0450_c_1_256 <= -1.56) and (sigma_km_substrate2_THZPSN2_SC > -1.139) then class: True | based on 4 samples"
+"if (sigma_km_product2_GF6PTA > -1.331) and (sigma_km_product10_LMPD_s_0450_c_1_256 > -1.56) and (sigma_km_substrate35_LMPD_s_0450_c_1_256 <= -1.556) and (Gamma_ABTA <= 0.184) then class: True | based on 3 samples"
+"if (sigma_km_product2_GF6PTA > -1.331) and (sigma_km_product10_LMPD_s_0450_c_1_256 > -1.56) and (sigma_km_substrate35_LMPD_s_0450_c_1_256 > -1.556) and (sigma_km_substrate2_ASPTAm > 1.831) then class: True | based on 1 samples"
+"if (sigma_km_product2_GF6PTA > -1.331) and (sigma_km_product10_LMPD_s_0450_c_1_256 > -1.56) and (sigma_km_substrate35_LMPD_s_0450_c_1_256 <= -1.556) and (Gamma_ABTA > 0.184) and (sigma_km_substrate1_ADCS <= -0.412) then class: True | based on 1 samples"
+"if (sigma_km_product2_GF6PTA <= -1.331) and (sigma_km_product1_PRPPS <= 1.006) and (sigma_km_product1_HEMEOSm > 0.751) then class: True | based on 1 samples"
