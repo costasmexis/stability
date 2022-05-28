@@ -1,0 +1,8 @@
+if (Gamma_COAtrm <= 1.224) and (sigma_km_product2_GF6PTA > -1.331) and (sigma_km_product1_IGPS > -1.766) and (sigma_km_product3_GLUPRT > -1.618) then class: False | based on 89 samples
+if (Gamma_COAtrm > 1.224) and (sigma_km_product2_PSCVT > -0.724) then class: True | based on 11 samples
+if (Gamma_COAtrm <= 1.224) and (sigma_km_product2_GF6PTA <= -1.331) and (sigma_km_product1_HEMEOSm > 0.751) then class: True | based on 4 samples
+if (Gamma_COAtrm > 1.224) and (sigma_km_product2_PSCVT <= -0.724) then class: False | based on 3 samples
+if (Gamma_COAtrm <= 1.224) and (sigma_km_product2_GF6PTA <= -1.331) and (sigma_km_product1_HEMEOSm <= 0.751) then class: False | based on 2 samples
+if (Gamma_COAtrm <= 1.224) and (sigma_km_product2_GF6PTA > -1.331) and (sigma_km_product1_IGPS > -1.766) and (sigma_km_product3_GLUPRT <= -1.618) and (Gamma_CO2t > 0.072) then class: False | based on 1 samples
+if (Gamma_COAtrm <= 1.224) and (sigma_km_product2_GF6PTA > -1.331) and (sigma_km_product1_IGPS > -1.766) and (sigma_km_product3_GLUPRT <= -1.618) and (Gamma_CO2t <= 0.072) then class: True | based on 1 samples
+if (Gamma_COAtrm <= 1.224) and (sigma_km_product2_GF6PTA > -1.331) and (sigma_km_product1_IGPS <= -1.766) then class: True | based on 1 samples

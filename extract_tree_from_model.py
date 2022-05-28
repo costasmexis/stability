@@ -48,69 +48,70 @@ def print_scores(y_true, y_pred):
     print('Recall:',recall_score(y_true, y_pred))
     print("\n\n")
 
+def main():
+    # ===================
+    # Read data files
+    # ===================
+    df = pd.read_csv('data/Parameters_90%stability.csv')
+    df = df.drop(['Unnamed: 0'], axis = 1)
 
-# ===================
-# Read data files
-# ===================
-df = pd.read_csv('data/Parameters_90%stability.csv')
-df = df.drop(['Unnamed: 0'], axis = 1)
+    X_train = pd.read_csv('data/x_train.csv')
+    y_train = pd.read_csv('data/y_train.csv')
 
-X_train = pd.read_csv('data/x_train.csv')
-y_train = pd.read_csv('data/y_train.csv')
+    X_test = pd.read_csv('data/x_test.csv')
+    y_test = pd.read_csv('data/y_test.csv')
 
-X_test = pd.read_csv('data/x_test.csv')
-y_test = pd.read_csv('data/y_test.csv')
+    print("Train: ", X_train.shape, "Test: ", X_test.shape)
 
-print("Train: ", X_train.shape, "Test: ", X_test.shape)
+    # ===================
+    # Normalize data
+    # ===================
+    X_train, X_test = normalize(X_train, X_test)
 
-# ===================
-# Normalize data
-# ===================
-X_train, X_test = normalize(X_train, X_test)
+    parser = argparse.ArgumentParser(description='Args model from which rules will be extracted')
+    parser.add_argument('-model','--model', help='ex. svc_tree_model.sav', required=True)
+    args = parser.parse_args()
 
-parser = argparse.ArgumentParser(description='Args model from which rules will be extracted')
-parser.add_argument('-model','--model', help='ex. svc_tree_model.sav', required=True)
-args = parser.parse_args()
+    # ===================
+    # Load model from disk
+    # ===================
+    filename = "models/"+args.model
+    model = pickle.load(open(filename, 'rb'))
+    print(model)
 
-# ===================
-# Load model from disk
-# ===================
-filename = "models/"+args.model
-model = pickle.load(open(filename, 'rb'))
-print(model)
+    # Make predictions
+    y_pred = model.predict(X_test)
+    print_scores(y_test, y_pred)
 
-# Make predictions
-y_pred = model.predict(X_test)
-print_scores(y_test, y_pred)
+    def train_tree(file_name, figure_name, tuning=True):
 
-def train_tree(file_name, figure_name, tuning=True):
+        # =================
+        # DecisionTree
+        # =================
 
-    # =================
-    # DecisionTree
-    # =================
+        if(tuning==True):
+            param_grid_tree = {
+                'max_depth': [2, 3, 4, 5, 6, 7, 8, 9, 10, 20, 25, 30, 40, 50, 100],
+                'min_samples_leaf': [5, 6, 7, 8, 9, 10, 15, 20, 25, 50, 100],
+                'criterion': ["gini", "entropy"]
+            }
+            dec_tree = DecisionTreeClassifier(random_state=SEED)
+            best_tree = tune_model(dec_tree, param_grid_tree, 1000, X_test, y_pred)
+        else:
+            best_tree = DecisionTreeClassifier(random_state=SEED)
+            best_tree.fit(X_test, y_pred)
 
-    if(tuning==True):
-        param_grid_tree = {
-            'max_depth': [2, 3, 4, 5, 6, 7, 8, 9, 10, 20, 25, 30, 40, 50, 100],
-            'min_samples_leaf': [5, 6, 7, 8, 9, 10, 15, 20, 25, 50, 100],
-            'criterion': ["gini", "entropy"]
-        }
-        dec_tree = DecisionTreeClassifier(random_state=SEED)
-        best_tree = tune_model(dec_tree, param_grid_tree, 1000, X_test, y_pred)
-    else:
-        best_tree = DecisionTreeClassifier(random_state=SEED)
-        best_tree.fit(X_test, y_pred)
+        filename = file_name
+        pickle.dump(best_tree, open(filename, 'wb'))
+        
+        plt.figure(figsize=(30,30))  # set plot size (denoted in inches)
+        tree.plot_tree(best_tree, filled=True, class_names=['0','1'])
+        plt.savefig(figure_name)
 
-    filename = file_name
-    pickle.dump(best_tree, open(filename, 'wb'))
-    
-    plt.figure(figsize=(30,30))  # set plot size (denoted in inches)
-    tree.plot_tree(best_tree, filled=True, class_names=['0','1'])
-    plt.savefig(figure_name)
+    # =======================================================
+    # Train a DecisionTreeClassifier using X_test and y_pred
+    # =======================================================
+    train_tree("models/"+args.model+"_tree_model.sav", "figures/"+args.model+"_tree_graph.png", False)
 
-# =======================================================
-# Train a DecisionTreeClassifier using X_test and y_pred
-# =======================================================
-train_tree("models/"+args.model+"_tree_model.sav", "figures/"+args.model+"_tree_graph.png", False)
-
-
+if __name__ == '__main__':
+    main()

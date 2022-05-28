@@ -121,5 +121,28 @@ def catboost():
     pickle.dump(cat, open(filename, 'wb'))
     
 
+def xgboost():
 
+    # ==========================
+    # XGBClassifier
+    # ==========================
 
+    param_grid_xgb = {
+        'learning_rate' : [0.05,0.10,0.15,0.20,0.25,0.30],
+        'max_depth' : [ 3, 4, 5, 6, 8, 10, 12, 15],
+        'min_child_weight' : [ 1, 3, 5, 7 ],
+        'gamma': [ 0.0, 0.01, 0.05, 0.1, 0.2 , 0.3, 0.4 ],
+        'colsample_bytree' : [ 0.3, 0.4, 0.5 , 0.7 ],
+        'n_estimators' : [10, 25, 50, 100, 150, 200, 300, 500]
+    }
+    
+    xgb_model = xgb.XGBClassifier(use_label_encoder=False, 
+        eval_metric='logloss', random_state=SEED)
+
+    best_xgb = tune_model(xgb_model, param_grid_xgb, 100, X_train, y_train.values.ravel())
+    score, y_pred = run_model(best_xgb, X_train, y_train.values.ravel(),
+        X_test, y_test.values.ravel())
+
+    filename = 'xgb_model.sav'
+    pickle.dump(best_xgb, open("models/"+filename, 'wb'))
+    
