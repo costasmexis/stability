@@ -52,14 +52,36 @@ def main():
     # ===================
     # Read data files
     # ===================
-    df = pd.read_csv('data/Parameters_90%stability.csv')
-    df = df.drop(['Unnamed: 0'], axis = 1)
+    value = input("Please enter 1(simple), 2(boruta), 3(kbest) dataset:\n")
+    print(f'You entered {value}')
 
-    X_train = pd.read_csv('data/x_train.csv')
-    y_train = pd.read_csv('data/y_train.csv')
+    if(value=="1"):
+        value="simple"
+        df = pd.read_csv('data/Parameters_90%stability.csv')
+        df = df.drop(['Unnamed: 0'], axis = 1)
 
-    X_test = pd.read_csv('data/x_test.csv')
-    y_test = pd.read_csv('data/y_test.csv')
+        X_train = pd.read_csv('data/x_train.csv')
+        y_train = pd.read_csv('data/y_train.csv')
+
+        X_test = pd.read_csv('data/x_test.csv')
+        y_test = pd.read_csv('data/y_test.csv')
+    elif(value=='2'):
+        value="boruta"
+        X_train = pd.read_csv('data/x_train_boruta.csv')
+        y_train = pd.read_csv('data/y_train.csv')
+
+        X_test = pd.read_csv('data/x_test_boruta.csv')
+        y_test = pd.read_csv('data/y_test.csv')
+    elif(value=='3'):
+        value="kbest"
+        X_train = pd.read_csv('data/x_train_kbest.csv')
+        y_train = pd.read_csv('data/y_train.csv')
+
+        X_test = pd.read_csv('data/x_test_kbest.csv')
+        y_test = pd.read_csv('data/y_test.csv')
+    else:
+        print("Wrong choice. Try again!")
+
 
     print("Train: ", X_train.shape, "Test: ", X_test.shape)
 

@@ -1,3 +1,10 @@
+'''
+
+Create X_train and X_test using feature selection techniques (boruta and SelectKBest)
+
+How to run: python3 modelling_with_best_features.py
+
+'''
 # ==================
 # Import libraries
 # ==================

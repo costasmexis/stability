@@ -1,0 +1,4 @@
+"if (Gamma_TPI <= -0.946) and (sigma_km_product2_AKGMAL > -0.25) then class: True | based on 15 samples"
+"if (Gamma_TPI <= -0.946) and (sigma_km_product2_AKGMAL <= -0.25) and (sigma_km_product2_HSTPT > 0.291) then class: True | based on 2 samples"
+"if (Gamma_TPI <= -0.946) and (sigma_km_product2_AKGMAL > -0.25) then class: True | based on 15 samples"
+"if (Gamma_TPI <= -0.946) and (sigma_km_product2_AKGMAL <= -0.25) and (sigma_km_product2_HSTPT > 0.291) then class: True | based on 2 samples"

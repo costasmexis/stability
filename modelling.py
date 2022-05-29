@@ -76,8 +76,8 @@ def run_model(model, X_train, y_train, X_test, y_test):
     return score, y_pred
 
 def tune_model(model, param_grid, n_iter, X_train, y_train):
-    grid = RandomizedSearchCV(model, param_grid, verbose=2,
-        scoring='roc_auc', cv=5, n_iter=n_iter)
+    grid = RandomizedSearchCV(model, param_grid, verbose=20,
+        scoring='roc_auc', cv=3, n_iter=n_iter)
     grid.fit(X_train, y_train)
     best_model = grid.best_estimator_
     return best_model
@@ -121,14 +121,14 @@ def tuned_tree():
     score, y_pred = run_model(best_tree, X_train, y_train.values.ravel(),
         X_test, y_test.values.ravel())
 
-    filename = "models/"+value+'_tree_model.sav'
+    filename = "models/"+value+'_tuned_tree_model.sav'
     pickle.dump(best_tree, open(filename, 'wb'))
     
     plt.figure(figsize=(30,30))  # set plot size (denoted in inches)
     tree.plot_tree(best_tree, filled=True, class_names=['0','1'])
-    plt.savefig("figures/"+value+'_dcs_tree.png')
+    plt.savefig("figures/"+value+'_dcs_tuned_tree.png')
 
-def full_tree():
+def no_tune_tree():
 
     # =================
     # DecisionTree
@@ -139,7 +139,7 @@ def full_tree():
 
     filename = "models/"+value+'_tree_model.sav'
     pickle.dump(dec_tree, open(filename, 'wb'))
-    
+        
     plt.figure(figsize=(30,30))  # set plot size (denoted in inches)
     tree.plot_tree(dec_tree, filled=True, class_names=['0','1'])
     plt.savefig("figures/"+value+'_dcs_tree.png')
@@ -177,7 +177,7 @@ def xgboost():
     xgb_model = xgb.XGBClassifier(use_label_encoder=False, 
         eval_metric='logloss', random_state=SEED)
 
-    best_xgb = tune_model(xgb_model, param_grid_xgb, 100, X_train, y_train.values.ravel())
+    best_xgb = tune_model(xgb_model, param_grid_xgb, 500, X_train, y_train.values.ravel())
     score, y_pred = run_model(best_xgb, X_train, y_train.values.ravel(),
         X_test, y_test.values.ravel())
 
