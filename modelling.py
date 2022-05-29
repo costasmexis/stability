@@ -15,6 +15,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import roc_auc_score, accuracy_score, f1_score, precision_score, recall_score, confusion_matrix
 from sklearn.model_selection import RandomizedSearchCV
 from catboost import CatBoostClassifier
+from sklearn import tree
 
 import xgboost as xgb
 
@@ -24,6 +25,7 @@ value = input("Please enter 1(simple), 2(boruta), 3(kbest) dataset:\n")
 print(f'You entered {value}')
 
 if(value=="1"):
+    value="simple"
     df = pd.read_csv('data/Parameters_90%stability.csv')
     df = df.drop(['Unnamed: 0'], axis = 1)
 
@@ -33,12 +35,14 @@ if(value=="1"):
     X_test = pd.read_csv('data/x_test.csv')
     y_test = pd.read_csv('data/y_test.csv')
 elif(value=='2'):
+    value="boruta"
     X_train = pd.read_csv('data/x_train_boruta.csv')
     y_train = pd.read_csv('data/y_train.csv')
 
     X_test = pd.read_csv('data/x_test_boruta.csv')
     y_test = pd.read_csv('data/y_test.csv')
 elif(value=='3'):
+    value="kbest"
     X_train = pd.read_csv('data/x_train_kbest.csv')
     y_train = pd.read_csv('data/y_train.csv')
 
@@ -97,10 +101,10 @@ def svc():
         X_test, y_test.values.ravel())
 
     # save the model to disk
-    filename = 'svc_model.sav'
+    filename = "models/"+value+'_svc_model.sav'
     pickle.dump(best_svc, open(filename, 'wb'))
 
-def tree():
+def tuned_tree():
 
     # =================
     # DecisionTree
@@ -117,13 +121,28 @@ def tree():
     score, y_pred = run_model(best_tree, X_train, y_train.values.ravel(),
         X_test, y_test.values.ravel())
 
-    filename = 'tree_model.sav'
+    filename = "models/"+value+'_tree_model.sav'
     pickle.dump(best_tree, open(filename, 'wb'))
     
     plt.figure(figsize=(30,30))  # set plot size (denoted in inches)
-    tree.plot_tree(model, filled=True, class_names=['0','1'])
-    plt.savefig('dcs_tree.png')
+    tree.plot_tree(best_tree, filled=True, class_names=['0','1'])
+    plt.savefig("figures/"+value+'_dcs_tree.png')
 
+def full_tree():
+
+    # =================
+    # DecisionTree
+    # =================
+    dec_tree = DecisionTreeClassifier(max_depth=None, max_features=None, random_state=SEED)
+    score, y_pred = run_model(dec_tree, X_train, y_train.values.ravel(),
+        X_test, y_test.values.ravel())
+
+    filename = "models/"+value+'_tree_model.sav'
+    pickle.dump(dec_tree, open(filename, 'wb'))
+    
+    plt.figure(figsize=(30,30))  # set plot size (denoted in inches)
+    tree.plot_tree(dec_tree, filled=True, class_names=['0','1'])
+    plt.savefig("figures/"+value+'_dcs_tree.png')
 
 def catboost():
 
@@ -135,7 +154,7 @@ def catboost():
     score, y_pred = run_model(cat, X_train, y_train.values.ravel(),
         X_test, y_test.values.ravel())
 
-    filename = 'catboost_model.sav'
+    filename = "models/"+value+'_catboost_model.sav'
     pickle.dump(cat, open(filename, 'wb'))
     
 
@@ -147,7 +166,8 @@ def xgboost():
 
     param_grid_xgb = {
         'learning_rate' : [0.05,0.10,0.15,0.20,0.25,0.30],
-        'max_depth' : [ 3, 4, 5, 6, 8, 10, 12, 15],
+        'max_depth' : [ 3, 4, 5, 6, 8, 10, 12, 15, None],
+        # 'max_depth' : [None],
         'min_child_weight' : [ 1, 3, 5, 7 ],
         'gamma': [ 0.0, 0.01, 0.05, 0.1, 0.2 , 0.3, 0.4 ],
         'colsample_bytree' : [ 0.3, 0.4, 0.5 , 0.7 ],
@@ -161,6 +181,6 @@ def xgboost():
     score, y_pred = run_model(best_xgb, X_train, y_train.values.ravel(),
         X_test, y_test.values.ravel())
 
-    filename = 'xgb_model.sav'
-    pickle.dump(best_xgb, open("models/"+filename, 'wb'))
+    filename = "models/"+value+'_xgb_model.sav'
+    pickle.dump(best_xgb, open(filename, 'wb'))
     
